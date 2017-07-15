@@ -11,13 +11,13 @@ import (
 
 func writeRestore(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `
-// RestoreAsset restores an asset under the given directory
-func RestoreAsset(dir, name string) error {
-	data, err := Asset(name)
+// _RestoreAsset restores an asset under the given directory
+func _RestoreAsset(dir, name string) error {
+	data, err := _Asset(name)
 	if err != nil {
 		return err
 	}
-	info, err := AssetInfo(name)
+	info, err := _AssetInfo(name)
 	if err != nil {
 		return err
 	}
@@ -36,16 +36,16 @@ func RestoreAsset(dir, name string) error {
 	return nil
 }
 
-// RestoreAssets restores an asset under the given directory recursively
-func RestoreAssets(dir, name string) error {
-	children, err := AssetDir(name)
+// _RestoreAssets restores an asset under the given directory recursively
+func _RestoreAssets(dir, name string) error {
+	children, err := _AssetDir(name)
 	// File
 	if err != nil {
-		return RestoreAsset(dir, name)
+		return _RestoreAsset(dir, name)
 	}
 	// Dir
 	for _, child := range children {
-		err = RestoreAssets(dir, filepath.Join(name, child))
+		err = _RestoreAssets(dir, filepath.Join(name, child))
 		if err != nil {
 			return err
 		}

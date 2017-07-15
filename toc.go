@@ -97,7 +97,7 @@ var _bintree = `)
 }
 
 func writeTOCTree(w io.Writer, toc []Asset) error {
-	_, err := fmt.Fprintf(w, `// AssetDir returns the file names below a certain
+	_, err := fmt.Fprintf(w, `// _AssetDir returns the file names below a certain
 // directory embedded in the file by go-bindata.
 // For example if you run go-bindata on data/... and data contains the
 // following hierarchy:
@@ -106,11 +106,11 @@ func writeTOCTree(w io.Writer, toc []Asset) error {
 //       img/
 //         a.png
 //         b.png
-// then AssetDir("data") would return []string{"foo.txt", "img"}
-// AssetDir("data/img") would return []string{"a.png", "b.png"}
-// AssetDir("foo.txt") and AssetDir("notexist") would return an error
-// AssetDir("") will return []string{"data"}.
-func AssetDir(name string) ([]string, error) {
+// then _AssetDir("data") would return []string{"foo.txt", "img"}
+// _AssetDir("data/img") would return []string{"a.png", "b.png"}
+// _AssetDir("foo.txt") and _AssetDir("notexist") would return an error
+// _AssetDir("") will return []string{"data"}.
+func _AssetDir(name string) ([]string, error) {
 	node := _bintree
 	if len(name) != 0 {
 		cannonicalName := strings.Replace(name, "\\", "/", -1)
@@ -163,10 +163,10 @@ func writeTOC(w io.Writer, toc []Asset) error {
 
 // writeTOCHeader writes the table of contents file header.
 func writeTOCHeader(w io.Writer) error {
-	_, err := fmt.Fprintf(w, `// Asset loads and returns the asset for the given name.
+	_, err := fmt.Fprintf(w, `// _Asset loads and returns the asset for the given name.
 // It returns an error if the asset could not be found or
 // could not be loaded.
-func Asset(name string) ([]byte, error) {
+func _Asset(name string) ([]byte, error) {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	if f, ok := _bindata[cannonicalName]; ok {
 		a, err := f()
@@ -178,34 +178,34 @@ func Asset(name string) ([]byte, error) {
 	return nil, fmt.Errorf("Asset %%s not found", name)
 }
 
-// MustAsset is like Asset but panics when Asset would return an error.
+// _MustAsset is like _Asset but panics when _Asset would return an error.
 // It simplifies safe initialization of global variables.
-func MustAsset(name string) []byte {
-	a, err := Asset(name)
+func _MustAsset(name string) []byte {
+	a, err := _Asset(name)
 	if err != nil {
-		panic("asset: Asset(" + name + "): " + err.Error())
+		panic("asset: _Asset(" + name + "): " + err.Error())
 	}
 
 	return a
 }
 
-// AssetInfo loads and returns the asset info for the given name.
+// _AssetInfo loads and returns the asset info for the given name.
 // It returns an error if the asset could not be found or
 // could not be loaded.
-func AssetInfo(name string) (os.FileInfo, error) {
+func _AssetInfo(name string) (os.FileInfo, error) {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	if f, ok := _bindata[cannonicalName]; ok {
 		a, err := f()
 		if err != nil {
-			return nil, fmt.Errorf("AssetInfo %%s can't read by error: %%v", name, err)
+			return nil, fmt.Errorf("_AssetInfo %%s can't read by error: %%v", name, err)
 		}
 		return a.info, nil
 	}
-	return nil, fmt.Errorf("AssetInfo %%s not found", name)
+	return nil, fmt.Errorf("_AssetInfo %%s not found", name)
 }
 
-// AssetNames returns the names of the assets.
-func AssetNames() []string {
+// _AssetNames returns the names of the assets.
+func _AssetNames() []string {
 	names := make([]string, 0, len(_bindata))
 	for name := range _bindata {
 		names = append(names, name)

@@ -6,7 +6,7 @@
 // in/test.asset
 // DO NOT EDIT!
 
-package main
+package out
 
 import (
 	"fmt"
@@ -60,7 +60,7 @@ func inATestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/a/test.asset", size: 15, mode: os.FileMode(436), modTime: time.Unix(1445582844, 0)}
+	info := bindataFileInfo{name: "in/a/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1500077472, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -78,7 +78,7 @@ func inBTestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/b/test.asset", size: 15, mode: os.FileMode(436), modTime: time.Unix(1445582844, 0)}
+	info := bindataFileInfo{name: "in/b/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1500077472, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -96,7 +96,7 @@ func inCTestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/c/test.asset", size: 15, mode: os.FileMode(436), modTime: time.Unix(1445582844, 0)}
+	info := bindataFileInfo{name: "in/c/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1500077472, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -114,15 +114,15 @@ func inTestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/test.asset", size: 15, mode: os.FileMode(436), modTime: time.Unix(1445582844, 0)}
+	info := bindataFileInfo{name: "in/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1500077472, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
-// Asset loads and returns the asset for the given name.
+// _Asset loads and returns the asset for the given name.
 // It returns an error if the asset could not be found or
 // could not be loaded.
-func Asset(name string) ([]byte, error) {
+func _Asset(name string) ([]byte, error) {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	if f, ok := _bindata[cannonicalName]; ok {
 		a, err := f()
@@ -134,34 +134,34 @@ func Asset(name string) ([]byte, error) {
 	return nil, fmt.Errorf("Asset %s not found", name)
 }
 
-// MustAsset is like Asset but panics when Asset would return an error.
+// _MustAsset is like _Asset but panics when _Asset would return an error.
 // It simplifies safe initialization of global variables.
-func MustAsset(name string) []byte {
-	a, err := Asset(name)
+func _MustAsset(name string) []byte {
+	a, err := _Asset(name)
 	if err != nil {
-		panic("asset: Asset(" + name + "): " + err.Error())
+		panic("asset: _Asset(" + name + "): " + err.Error())
 	}
 
 	return a
 }
 
-// AssetInfo loads and returns the asset info for the given name.
+// _AssetInfo loads and returns the asset info for the given name.
 // It returns an error if the asset could not be found or
 // could not be loaded.
-func AssetInfo(name string) (os.FileInfo, error) {
+func _AssetInfo(name string) (os.FileInfo, error) {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	if f, ok := _bindata[cannonicalName]; ok {
 		a, err := f()
 		if err != nil {
-			return nil, fmt.Errorf("AssetInfo %s can't read by error: %v", name, err)
+			return nil, fmt.Errorf("_AssetInfo %s can't read by error: %v", name, err)
 		}
 		return a.info, nil
 	}
-	return nil, fmt.Errorf("AssetInfo %s not found", name)
+	return nil, fmt.Errorf("_AssetInfo %s not found", name)
 }
 
-// AssetNames returns the names of the assets.
-func AssetNames() []string {
+// _AssetNames returns the names of the assets.
+func _AssetNames() []string {
 	names := make([]string, 0, len(_bindata))
 	for name := range _bindata {
 		names = append(names, name)
@@ -177,7 +177,7 @@ var _bindata = map[string]func() (*asset, error){
 	"in/test.asset": inTestAsset,
 }
 
-// AssetDir returns the file names below a certain
+// _AssetDir returns the file names below a certain
 // directory embedded in the file by go-bindata.
 // For example if you run go-bindata on data/... and data contains the
 // following hierarchy:
@@ -186,11 +186,11 @@ var _bindata = map[string]func() (*asset, error){
 //       img/
 //         a.png
 //         b.png
-// then AssetDir("data") would return []string{"foo.txt", "img"}
-// AssetDir("data/img") would return []string{"a.png", "b.png"}
-// AssetDir("foo.txt") and AssetDir("notexist") would return an error
-// AssetDir("") will return []string{"data"}.
-func AssetDir(name string) ([]string, error) {
+// then _AssetDir("data") would return []string{"foo.txt", "img"}
+// _AssetDir("data/img") would return []string{"a.png", "b.png"}
+// _AssetDir("foo.txt") and _AssetDir("notexist") would return an error
+// _AssetDir("") will return []string{"data"}.
+func _AssetDir(name string) ([]string, error) {
 	node := _bintree
 	if len(name) != 0 {
 		cannonicalName := strings.Replace(name, "\\", "/", -1)
@@ -216,28 +216,29 @@ type bintree struct {
 	Func     func() (*asset, error)
 	Children map[string]*bintree
 }
+
 var _bintree = &bintree{nil, map[string]*bintree{
-	"in": &bintree{nil, map[string]*bintree{
-		"a": &bintree{nil, map[string]*bintree{
-			"test.asset": &bintree{inATestAsset, map[string]*bintree{}},
+	"in": {nil, map[string]*bintree{
+		"a": {nil, map[string]*bintree{
+			"test.asset": {inATestAsset, map[string]*bintree{}},
 		}},
-		"b": &bintree{nil, map[string]*bintree{
-			"test.asset": &bintree{inBTestAsset, map[string]*bintree{}},
+		"b": {nil, map[string]*bintree{
+			"test.asset": {inBTestAsset, map[string]*bintree{}},
 		}},
-		"c": &bintree{nil, map[string]*bintree{
-			"test.asset": &bintree{inCTestAsset, map[string]*bintree{}},
+		"c": {nil, map[string]*bintree{
+			"test.asset": {inCTestAsset, map[string]*bintree{}},
 		}},
-		"test.asset": &bintree{inTestAsset, map[string]*bintree{}},
+		"test.asset": {inTestAsset, map[string]*bintree{}},
 	}},
 }}
 
-// RestoreAsset restores an asset under the given directory
-func RestoreAsset(dir, name string) error {
-	data, err := Asset(name)
+// _RestoreAsset restores an asset under the given directory
+func _RestoreAsset(dir, name string) error {
+	data, err := _Asset(name)
 	if err != nil {
 		return err
 	}
-	info, err := AssetInfo(name)
+	info, err := _AssetInfo(name)
 	if err != nil {
 		return err
 	}
@@ -256,16 +257,16 @@ func RestoreAsset(dir, name string) error {
 	return nil
 }
 
-// RestoreAssets restores an asset under the given directory recursively
-func RestoreAssets(dir, name string) error {
-	children, err := AssetDir(name)
+// _RestoreAssets restores an asset under the given directory recursively
+func _RestoreAssets(dir, name string) error {
+	children, err := _AssetDir(name)
 	// File
 	if err != nil {
-		return RestoreAsset(dir, name)
+		return _RestoreAsset(dir, name)
 	}
 	// Dir
 	for _, child := range children {
-		err = RestoreAssets(dir, filepath.Join(name, child))
+		err = _RestoreAssets(dir, filepath.Join(name, child))
 		if err != nil {
 			return err
 		}
@@ -277,4 +278,3 @@ func _filePath(dir, name string) string {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
 }
-
