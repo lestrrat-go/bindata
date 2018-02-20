@@ -1,4 +1,4 @@
-# go-bindata (forked by lestrrat)
+# bindata (forked by lestrrat)
 
 This is a forked version of go-bindata, as the original author seems to be either busy in real life or has lost interest on this project. Rather than complaining about unmerged PRs and fixes, I'm just forking it here.
 
@@ -17,7 +17,7 @@ output being generated.
 
 To install the library and command line program, use the following:
 
-	go get -u github.com/lestrrat/go-bindata/...
+	go get -u github.com/lestrrat-go/bindata/...
 
 
 ### Usage
